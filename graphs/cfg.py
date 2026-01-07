@@ -71,3 +71,9 @@ class ControlFlowGraph:
 
     def edges(self) -> set:
         return set(self._graph.edges)
+
+    def dfs(self) -> list:
+        return list(nx.dfs_edges(self._graph, self.tree.body[0]))
+
+    def bfs(self) -> list:
+        return list(nx.bfs_edges(self._graph, self.tree.body[0]))
