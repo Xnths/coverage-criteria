@@ -25,7 +25,15 @@ class NodeCoverage:
     def test(self):
         root = self._cfg.tree.body[0]
         self._dfs(root)
-        return self._covered == self._total
+        return self._covered == self._total and not self._has_loops() and not self._has_infinite_loops()
+
+    def _has_infinite_loops(self):
+        scc = self._cfg.infinite_loop_sccs()
+        return scc != []
+
+    def _has_loops(self):
+        scc = self._cfg.loop_sccs()
+        return scc != []
 
     def coverage(self):
         return len(self._covered) / len(self._total)
