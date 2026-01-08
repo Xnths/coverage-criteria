@@ -1,4 +1,5 @@
 from graphs.cfg import ControlFlowGraph
+import networkx as nx
 
 class NodeCoverage:
     def __init__(self, cfg: ControlFlowGraph):
@@ -36,4 +37,10 @@ class NodeCoverage:
         return scc != []
 
     def coverage(self):
-        return len(self._covered) / len(self._total)
+        return f"{len(self._covered) / len(self._total) * 100}%"
+
+    def paths(self):
+        g = self._cfg._graph
+        root = self._cfg.tree.body[0]
+        terminal = self._cfg.terminal
+        return list(nx.all_simple_paths(g, root, terminal))
